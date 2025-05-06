@@ -1389,7 +1389,7 @@ function endGame() {
         outcomeHeaderText = "Habemus Papam!";
         resultText = `White smoke billows! You, Cardinal ${gameState.playerName}, have navigated the treacherous currents of the Conclave and emerged victorious with ${highestPP} Pope Points. You are the new Pope!`;
     } else {
-        outcomeHeaderText = "Black Smoke Rises...for Someone Else";
+        outcomeHeaderText = "White Smoke Rises...for Someone Else";
         resultText = `The influential ${winner} (with ${highestPP} PP) has been chosen. Your own ambition (${gameState.playerPP} PP) was not enough this time.`;
     }
 
