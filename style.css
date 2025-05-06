@@ -1,0 +1,801 @@
+/* White Smoke - The Papal Pettiness Simulator
+   CSS by Claude - Embodying the sacred and profane */
+
+   @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&display=swap');
+
+   :root {
+     --color-bg: #0a0a0a;
+     --color-text: #e6e6e6;
+     --color-accent: #c9b16a;
+     --color-papal-white: #f5f5f5;
+     --color-pope-red: #9e1b32;
+     --color-cardinal-purple: #6b2f70;
+     --color-smoke-gray: #303030;
+     --color-button: #1f1f1f;
+     --color-button-hover: #333;
+     --color-player: #9e1b32; /* Player cardinal color */
+     
+     --shadow-glow: 0 0 15px rgba(201, 177, 106, 0.3);
+   }
+   
+   /* Base Styles */
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+   
+   body {
+     background-color: var(--color-bg);
+     color: var(--color-text);
+     font-family: 'EB Garamond', serif;
+     font-size: 18px;
+     line-height: 1.6;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+     padding: 20px;
+     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230a0a0a"/><path d="M50,20 C55,20 60,25 60,30 C60,35 55,40 50,40 C45,40 40,35 40,30 C40,25 45,20 50,20 Z" fill="%23111" opacity="0.3"/></svg>');
+     background-size: 100px 100px;
+   }
+   
+   /* Game Container */
+   #game-container {
+     max-width: 900px;
+     width: 100%;
+     background-color: var(--color-bg);
+     border: 1px solid var(--color-accent);
+     border-radius: 8px;
+     box-shadow: var(--shadow-glow);
+     overflow: hidden;
+     position: relative;
+   }
+   
+   /* Screen Styles */
+   .screen {
+     padding: 40px;
+     position: relative; /* Needed for absolute positioning of child elements like audio button */
+   }
+   
+   /* Name Capture Screen */
+   .name-input-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 15px;
+     margin-top: 30px;
+   }
+   
+   .name-input-container label {
+     font-family: 'Cinzel', serif;
+     font-size: 1.2rem;
+     color: var(--color-accent);
+   }
+   
+   #player-name {
+     background-color: var(--color-smoke-gray);
+     border: 1px solid var(--color-accent);
+     color: var(--color-papal-white);
+     padding: 12px 15px;
+     font-family: 'EB Garamond', serif;
+     font-size: 1.1rem;
+     width: 100%;
+     max-width: 300px;
+     text-align: center;
+     border-radius: 4px;
+   }
+   
+   #confirm-name-button {
+     margin-top: 20px;
+   }
+   
+   /* Typography */
+   h1 {
+     font-family: 'Cinzel', serif;
+     font-size: 3.5rem;
+     color: var(--color-papal-white);
+     text-align: center;
+     margin-bottom: 10px;
+     font-weight: 600;
+     letter-spacing: 1px;
+     position: relative;
+   }
+   
+   h1::after {
+     content: "";
+     display: block;
+     width: 100px;
+     height: 2px;
+     background-color: var(--color-accent);
+     margin: 15px auto 30px;
+   }
+   
+   h2 {
+     font-family: 'Cinzel', serif;
+     font-size: 1.8rem;
+     color: var(--color-accent);
+     margin-bottom: 20px;
+     font-weight: 500;
+   }
+   
+   .tagline {
+     font-style: italic;
+     text-align: center;
+     color: var(--color-accent);
+     font-size: 1.3rem;
+     margin-bottom: 30px;
+   }
+   
+   .scene-text {
+     margin-bottom: 40px;
+     text-align: center;
+     font-size: 1.2rem;
+     max-width: 700px;
+     margin-left: auto;
+     margin-right: auto;
+     line-height: 1.7;
+   }
+   
+   /* Buttons */
+   button {
+     background-color: var(--color-button);
+     color: var(--color-papal-white);
+     border: 1px solid var(--color-accent);
+     padding: 12px 24px;
+     font-family: 'Cinzel', serif;
+     font-size: 1.1rem;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     display: block;
+     margin: 0 auto;
+     border-radius: 4px;
+   }
+   
+   button:hover {
+     background-color: var(--color-button-hover);
+     box-shadow: 0 0 10px rgba(201, 177, 106, 0.4);
+     transform: translateY(-2px);
+   }
+   
+   #begin-button, #play-again-button, #confirm-name-button {
+     width: 250px;
+   }
+   
+   /* Game Header */
+   #game-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 30px;
+     padding: 15px 20px;
+     border: 1px solid var(--color-smoke-gray);
+     border-radius: 4px;
+     background-color: rgba(31, 31, 31, 0.4);
+     font-family: 'Cinzel', serif;
+     width: 100%;
+   }
+   
+   #turn-counter {
+     font-size: 1.2rem;
+     flex-grow: 1; /* Allow turn counter to take available space, pushing button to right */
+   }
+   
+   /* Shared Audio Toggle Button Styles */
+   .audio-toggle-button-shared {
+     background: none;
+     border: none;
+     color: var(--color-accent);
+     cursor: pointer;
+     padding: 5px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     position: absolute; /* Default to absolute for screens */
+     top: 20px;          /* Adjust as needed */
+     right: 20px;         /* Adjust as needed */
+     z-index: 100;      /* Ensure it's above other screen content */
+   }
+   
+   /* Specific override for the button within game-header if it needs to behave differently */
+   #game-header .audio-toggle-button-shared {
+     position: static; /* Override absolute positioning, rely on flexbox of game-header */
+     /* margin-left: auto; Re-add if flex-grow on turn-counter isn't enough, but try without first */
+   }
+   
+   .music-icon { /* This class is already shared by SVGs */
+     width: 24px;
+     height: 24px;
+   }
+   
+   .audio-toggle-button-shared:hover {
+     color: var(--color-papal-white);
+   }
+   
+   #player-status {
+     color: var(--color-accent);
+     font-weight: 500;
+     font-size: 1.2rem;
+   }
+   
+   /* Cardinals Section */
+   #cardinals-section {
+     margin-bottom: 30px;
+     border: 1px solid var(--color-smoke-gray);
+     border-radius: 4px;
+     background-color: rgba(10, 10, 10, 0.3);
+     padding: 0;
+     overflow: hidden;
+   }
+   
+   #cardinals-section h2 {
+     padding: 15px 20px;
+     margin-bottom: 0;
+     background-color: rgba(10, 10, 10, 0.5);
+     border-bottom: 1px solid var(--color-smoke-gray);
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+   }
+   
+   .points-label {
+     font-size: 0.8em;
+     color: var(--color-accent);
+     font-weight: 500;
+     margin-left: auto;
+   }
+   
+   #cardinal-list {
+     list-style: none;
+     transition: height 0.5s ease;
+     padding: 15px;
+     margin: 0;
+   }
+   
+   #cardinal-list li {
+     padding: 15px;
+     margin-bottom: 10px;
+     background-color: rgba(107, 47, 112, 0.15);
+     border-left: 3px solid var(--color-cardinal-purple);
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     border-radius: 0 4px 4px 0;
+     position: relative;
+     will-change: transform;
+   }
+
+   /* Style for the temporary highlight during movement */
+   #cardinal-list li.cardinal-highlight-move {
+    z-index: 10; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px var(--color-accent); 
+    transform: scale(1.02);
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, z-index 0s linear 0s;
+   }
+
+   /* Player Cardinal Styling */
+   #cardinal-list li.player-cardinal {
+     background-color: rgba(158, 27, 50, 0.15);
+     border-left: 3px solid var(--color-player);
+   }
+
+   /* Specific highlight for player moving */
+   #cardinal-list li.player-cardinal.cardinal-highlight-move {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px var(--color-pope-red);
+   }
+
+   #cardinal-list li.player-cardinal .cardinal-name {
+     color: var(--color-papal-white);
+   }
+   
+   .cardinal-name {
+     font-weight: 600;
+     font-family: 'Cinzel', serif;
+     color: var(--color-papal-white);
+     width: 25%;
+   }
+   
+   .cardinal-tags {
+     font-style: italic;
+     color: var(--color-text);
+     opacity: 0.9;
+     width: 60%;
+   }
+   
+   .cardinal-pp {
+     font-weight: 600;
+     color: var(--color-accent);
+     width: 15%;
+     text-align: right;
+     transition: transform 0.2s ease-out, color 0.2s ease-out; /* Base transition */
+   }
+   
+   /* Span inside cardinal-pp for animation */
+   .cardinal-pp span, #player-status span {
+       display: inline-block; /* Needed for transform */
+       transition: background-color 0.4s ease, transform 0.4s ease;
+   }
+   
+   /* Animation classes for PP changes */
+   .pp-increase {
+       background-color: rgba(76, 175, 80, 0.4); /* Green flash */
+       transform: scale(1.3);
+   }
+   
+   .pp-decrease {
+       background-color: rgba(244, 67, 54, 0.4); /* Red flash */
+       transform: scale(0.8);
+   }
+   
+   /* Highlight for AI action */
+   .acting-ai-highlight {
+       box-shadow: 0 0 15px var(--color-cardinal-purple);
+   }
+   
+   /* Activity Log Section */
+   #activity-log-section {
+       margin-bottom: 40px;
+       border: 1px solid var(--color-accent);
+       border-radius: 4px;
+       background-color: rgba(31, 31, 31, 0.3);
+       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+   }
+   
+   /* Header row that contains title and potentially the continue button */
+   #activity-log-header {
+       padding: 15px 20px;
+       border-bottom: 1px solid var(--color-accent);
+       margin-bottom: 0;
+       font-size: 1.5rem;
+       background-color: rgba(10, 10, 10, 0.5);
+       letter-spacing: 1px;
+       color: var(--color-accent);
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+   }
+   
+   /* Style for the header text to ensure it stays left-aligned */
+   #activity-log-header-text {
+       font-family: 'Cinzel', serif;
+       font-size: 1.5rem;
+       color: var(--color-accent);
+       letter-spacing: 1px;
+   }
+   
+   #activity-log-content {
+       padding: 30px;
+       height: 350px; /* Fixed height */
+       position: relative;
+       overflow: hidden;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       width: 100%;
+       box-sizing: border-box;
+   }
+   
+   /* Updated: Base style for the wrapper around items inside the activity log */
+   #activity-log-content > .log-item-wrapper {
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       opacity: 0;
+       transform: translateY(10px);
+       transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+       display: flex; /* Add flexbox */
+       flex-direction: column; /* Stack children vertically */
+       justify-content: center; /* Center content vertically */
+       align-items: center; /* Center content horizontally */
+       width: 100%; /* Ensure it takes full width */
+       padding: 30px; /* Add padding inside the wrapper */
+       overflow: hidden; /* Change from overflow-y: auto to overflow: hidden */
+       max-height: 100%; /* Ensure it doesn't overflow parent */
+   }
+   
+   /* Updated: Style for the currently active wrapper */
+   #activity-log-content > .log-item-wrapper.active {
+       opacity: 1;
+       transform: translateY(0);
+       position: relative; /* Take up space when active */
+   }
+   
+   /* Override animation defaults specifically for the button container when active */
+   #activity-log-content > .log-item-wrapper.active > .action-buttons-container {
+       position: relative; 
+       opacity: 1;
+       transform: none;
+       width: 100%; /* Ensure full width */
+   }
+   
+   /* Container specifically for action buttons within the log */
+   .action-buttons-container {
+       display: flex;
+       flex-direction: column;
+       gap: 15px; /* Increased spacing between buttons */
+       width: 100%; /* Fill the content area */
+       max-width: 800px; /* Limit maximum width */
+   }
+   
+   /* Action buttons styling - with fixed dimensions */
+   .action-button { 
+       width: 100%;
+       height: 64px; /* Fixed height based on your screenshots */
+       text-align: left;
+       padding: 20px 24px;
+       font-family: 'EB Garamond', serif;
+       font-size: 1.1rem;
+       background-color: rgba(31, 31, 31, 0.8);
+       color: var(--color-papal-white);
+       border: 1px solid var(--color-accent);
+       border-radius: 4px;
+       margin: 0 auto;
+       position: relative;
+       opacity: 1;
+       transform: none;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+       box-sizing: border-box;
+       transition: none; /* Disable all transitions by default */
+       white-space: nowrap; /* Prevent text wrapping */
+       overflow: hidden; /* Hide overflowing text */
+       text-overflow: ellipsis; /* Add ellipsis for long text */
+   }
+    
+   /* Only add transitions on hover state */
+   .action-button:hover {
+       transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+       background-color: rgba(201, 177, 106, 0.15);
+       box-shadow: 0 0 15px rgba(201, 177, 106, 0.2);
+       transform: translateY(-2px);
+   }
+
+   /* Completely freeze all properties when disabled */
+   .action-button:disabled,
+   .action-button[disabled] {
+       cursor: not-allowed;
+       opacity: 0.6;
+       background-color: var(--color-smoke-gray) !important;
+       border-color: var(--color-smoke-gray) !important;
+       transform: none !important;
+       transition: none !important;
+       box-shadow: none !important;
+       width: 100% !important;
+       height: 64px !important;
+   }
+   
+   /* Outcome Container & Decorative Elements */
+   .outcome-container {
+       position: relative;
+       padding: 20px 10px;
+       overflow: hidden;
+       width: 100%; /* Ensure full width */
+       max-width: 800px; /* Limit maximum width */
+       display: flex;
+       flex-direction: column; 
+       align-items: center;
+       justify-content: center;
+   }
+   
+   .outcome-decorative {
+       position: absolute;
+       font-size: 200px;
+       opacity: 0.04;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       color: var(--color-accent);
+       pointer-events: none;
+       font-family: 'Times New Roman', serif;
+   }
+   
+   /* Outcome Text Styling */
+   .outcome-text {
+       font-style: italic;
+       line-height: 1.8;
+       font-size: 1.2rem;
+       width: 100%; 
+       margin-bottom: 0;
+       text-align: center;
+       color: var(--color-papal-white);
+       position: relative;
+       z-index: 1;
+   }
+   
+   /* Add decorative quotes to outcome text */
+   .outcome-text:before,
+   .outcome-text:after {
+       content: "";
+       position: absolute;
+       width: 30%;
+       height: 1px;
+       background: linear-gradient(to right, transparent, var(--color-accent), transparent);
+   }
+   
+   .outcome-text:before {
+       top: -10px;
+       left: 35%;
+   }
+   
+   .outcome-text:after {
+       bottom: -10px;
+       left: 35%;
+   }
+   
+   /* Continue Button - fixed size */
+   .continue-button {
+       display: block;
+       padding: 8px 20px;
+       font-size: 0.85rem;
+       width: 130px; /* Fixed width based on screenshots */
+       height: 40px; /* Fixed height */
+       position: relative;
+       opacity: 1;
+       transform: none;
+       background-color: rgba(51, 51, 51, 0.8);
+       border: 1px solid var(--color-accent);
+       color: var(--color-accent);
+       font-family: 'Cinzel', serif;
+       border-radius: 4px;
+       letter-spacing: 0.5px;
+       cursor: pointer;
+       text-transform: uppercase;
+       z-index: 10;
+       margin: 0;
+       box-sizing: border-box;
+       transition: none; /* Disable transitions by default */
+   }
+   
+   /* Add transitions only on hover */
+   .continue-button:hover {
+       transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+       background-color: rgba(201, 177, 106, 0.2);
+       box-shadow: 0 0 12px rgba(201, 177, 106, 0.3);
+       transform: translateY(-2px);
+   }
+
+   /* Freeze all properties when disabled */
+   .continue-button:disabled,
+   .continue-button[disabled] {
+       opacity: 0.6;
+       cursor: not-allowed;
+       transform: none !important;
+       transition: none !important;
+       box-shadow: none !important;
+       background-color: rgba(51, 51, 51, 0.6) !important;
+       border-color: var(--color-smoke-gray) !important;
+       width: 130px !important;
+       height: 40px !important;
+   }
+   
+   /* End Game */
+   #outcome-header {
+       font-size: 2.8rem;
+       margin-bottom: 30px;
+   }
+   
+   #result-text {
+       font-size: 1.3rem;
+       margin-bottom: 30px;
+       line-height: 1.8;
+   }
+   
+   /* Enhanced Heaven Score Section */
+   #heaven-score-section {
+       margin: 40px 0;
+       border: 1px solid var(--color-accent);
+       border-radius: 6px;
+       background-color: rgba(10, 10, 10, 0.7);
+       box-shadow: 0 0 20px rgba(201, 177, 106, 0.2);
+       overflow: hidden;
+       transform: translateY(0);
+       animation: heavenReveal 1.2s ease-in-out;
+       display: none; /* Initially hidden until revealed */
+   }
+   
+   @keyframes heavenReveal {
+       0% {
+           opacity: 0;
+           transform: translateY(20px);
+       }
+       100% {
+           opacity: 1;
+           transform: translateY(0);
+       }
+   }
+   
+   .heaven-header {
+       font-family: 'Cinzel', serif;
+       font-size: 1.7rem;
+       color: var(--color-accent);
+       padding: 15px 20px;
+       margin: 0;
+       text-align: center;
+       border-bottom: 1px solid var(--color-accent);
+       background-color: rgba(10, 10, 10,.5);
+       letter-spacing: 1px;
+   }
+   
+   .heaven-score-content {
+       padding: 25px;
+       position: relative;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+   
+   .heaven-icon {
+       font-size: 80px;
+       color: var(--color-accent);
+       opacity: 0.3;
+       margin-bottom: 20px;
+       animation: heavenGlow 3s infinite alternate;
+   }
+   
+   @keyframes heavenGlow {
+       0% {
+           opacity: 0.2;
+           transform: scale(0.95);
+       }
+       100% {
+           opacity: 0.4;
+           transform: scale(1.05);
+       }
+   }
+   
+   #heaven-score-text {
+       font-style: italic;
+       color: var(--color-papal-white);
+       font-size: 1.2rem;
+       line-height: 1.7;
+       text-align: center;
+       position: relative;
+       z-index: 2;
+       padding: 0 20px;
+   }
+   
+   /* Utility Classes */
+   .hidden {
+       display: none;
+   }
+   
+   /* Smoke Animation (for decorative purposes) */
+   .smoke-container {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       pointer-events: none;
+       overflow: hidden;
+   }
+   
+   .smoke {
+       position: absolute;
+       bottom: -100px;
+       width: 20px;
+       height: 20px;
+       background-color: rgba(201, 177, 106, 0.05);
+       border-radius: 50%;
+       opacity: 0;
+       animation: rise 15s linear infinite;
+   }
+   
+   .smoke:nth-child(1) {
+       left: 20%;
+       animation-delay: 0s;
+       width: 40px;
+       height: 40px;
+   }
+   
+   .smoke:nth-child(2) {
+       left: 40%;
+       animation-delay: 2s;
+       width: 60px;
+       height: 60px;
+   }
+   
+   .smoke:nth-child(3) {
+       left: 60%;
+       animation-delay: 5s;
+       width: 50px;
+       height: 50px;
+   }
+   
+   .smoke:nth-child(4) {
+       left: 80%;
+       animation-delay: 8s;
+       width: 30px;
+       height: 30px;
+   }
+   
+   @keyframes rise {
+       0% {
+           bottom: -100px;
+           opacity: 0;
+           transform: translateX(0) scale(0.5);
+       }
+       10% {
+           opacity: 0.2;
+       }
+       50% {
+           opacity: 0.3;
+           transform: translateX(-30px) scale(1);
+       }
+       90% {
+           opacity: 0.1;
+       }
+       100% {
+           bottom: 100%;
+           opacity: 0;
+           transform: translateX(30px) scale(2);
+       }
+   }
+
+   @keyframes fadeIn {
+       from { opacity: 0; }
+       to { opacity: 1; }
+   }
+
+   /* List reordering animation */
+   @keyframes moveToPosition {
+       0% { transform: translateY(0); }
+       100% { transform: translateY(var(--target-position)); }
+   }
+   
+   /* Responsive Adjustments */
+   @media (max-width: 768px) {
+       .screen {
+         padding: 20px;
+       }
+       
+       h1 {
+         font-size: 2.5rem;
+       }
+       
+       h2 {
+         font-size: 1.5rem;
+       }
+       
+       #game-header {
+         flex-direction: column;
+         gap: 10px;
+       }
+       
+       #cardinal-list li {
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 5px;
+       }
+       
+       .cardinal-name, .cardinal-tags, .cardinal-pp {
+         width: 100%;
+       }
+       
+       .cardinal-pp {
+         text-align: left;
+       }
+   }
+
+   /* Intro screen */
+   .intro-content {
+       text-align: center;
+       max-width: 650px;
+       margin: 0 auto;
+   }
+
+   .logo-container {
+       margin: 0 auto 30px;
+       width: 100%;
+       max-width: 500px;
+       text-align: center;
+   }
+
+   .logo-image {
+       width: 100%;
+       max-width: 450px;
+       height: auto;
+       display: block;
+       margin: 0 auto;
+   }
