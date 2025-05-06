@@ -20,7 +20,7 @@ const AI_ACTION_WEIGHTS = {
 };
 const AI_TARGET_PLAYER_CHANCE = 0.3; // Chance AI targets player instead of another AI
 
-const NAMES = ["Pietro", "Anders", "Jean", "Klaus", "Mateo", "Stefan", "Javier", "Emil", "Benedikt", "Francois", "Lorenzo", "Yuri", "Casimir", "Viktor", "Giovanni", "Seán", "Kenjiro", "Thiago", "Bogdan", "Rainer", "Pascal", "Augustin", "Darius", "Felix"];
+const NAMES = ["Pietro", "Fernando", "Louis", "Vinko", "Peter", "Josip", "Philippe", "Stanislaw", "Francisco", "Daniel", "Odilo", "Robert", "Raymond", "Kurt", "Malcolm", "Reinhard", "Thomas", "Wim", "Guiseppe", "Timothy", "Rainer", "Baselios", "Vincent", "Leopoldo", "Jean-Pierre", "Mario", "Manuel", "Arthur", "Carlos", "Jozef", "Anders", "Ignatius", "Matteo", "Antoine", "Augusto", "Jean-Marc", "Anthony", "Paulo", "Giorgio", "Sebastian", "Jaime", "Kevin", "Marcello", "Emil"];
 const TAG_LEANINGS = ["Traditionalist", "Pragmatist", "Reformer", "Mystic", "Bureaucrat", "Diplomat", "Scholar", "Populist", "Ascetic"];
 const TAG_QUIRKS = ["Art Lover", "Sleeps With Teddy", "Secret Smoker", "Gourmand", "Early Riser", "Compulsive Knitter", "Opera Fanatic", "Owns Too Many Cats", "History Buff", "Terrible Singer", "Chess Master", "Allergic to Incense"];
 const TAG_REPUTATIONS = ["Known Gossip", "Respected Theologian", "Master Orator", "Financially Savvy", "Man of the People", "Stern Disciplinarian", "Rumored Saint", "Always Late", "Secret Poet", "Surprisingly Strong", "Never Forgets a Slight"];
