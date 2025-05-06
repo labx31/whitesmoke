@@ -799,3 +799,20 @@
        display: block;
        margin: 0 auto;
    }
+
+.attribution {
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 30px;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.attribution a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.attribution a:hover {
+    text-decoration: underline;
+}
